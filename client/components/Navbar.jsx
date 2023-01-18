@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../Images/Logo.png';
+import MapContainer from './MapContainer.jsx';
 
 const Navbar = () => {
   const [selectedPage, setSelectedPage] = useState('');
