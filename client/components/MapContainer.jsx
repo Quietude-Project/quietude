@@ -11,6 +11,8 @@ import { useEffect } from "react";
 
 import LocationSearch from "./LocationSearch.jsx";
 
+
+
 const Pin = ({ src }) => <img className='h-7 w-7' src={src}></img>;
 
 const MapContainer = props => {
@@ -21,7 +23,7 @@ const MapContainer = props => {
     },
     zoom: 17
   };
-
+  
   return (
     // Important! Always set the container height explicitly
     <div style={{ height: '80vh', width: '100%' }}>
