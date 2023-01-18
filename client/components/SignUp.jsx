@@ -3,13 +3,14 @@ import axios from "axios";
 import {useNavigate, Link} from "react-router-dom";
 
 function Signup() {
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      const { username, password } = props;
+      // const { username, password } = props;
 
       const requestOptions = {
           method: 'POST',
@@ -20,20 +21,15 @@ function Signup() {
           //Signup endpoints pending
       fetch('/api/users/register', requestOptions)
         .then(data => {
-          if (!data.ok) {
-              alert('Your username or password is incorrect');
-              //throw Error('Your username or password is incorrect')
-              navigate('/signup')
-          } else {
-             navigate('/home', {state:{username: username}});
-          }
+            console.log("success", username, password)
+             navigate('/', {state:{username: username}});
       })
       .catch(err => console.log(err));
       console.log(username, password);
   }
     return (
-        <form className="signup" onSubmit={handleSubmit}>
-            <h3>Signup</h3>
+        <form className="h-screen w-screen flex flex-col items-center justify-center" onSubmit={handleSubmit}>
+            <h3 className="mb-5">Signup</h3>
 
                 <input 
                 type="text" onChange={(e)=>{setUsername(e.target.value)}} value={username} placeholder="Username" name="" id=""
@@ -44,7 +40,7 @@ function Signup() {
             <br/>
             <p> OR</p>
             <br/>
-            <button>Sign Up</button>
+            <button className='mb-2'>Sign Up</button>
             <button>Sign Up With Github</button>
         </form>
     )

@@ -8,7 +8,6 @@ const userController = {};
 userController.register = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log(req.body)
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -18,6 +17,8 @@ userController.register = async (req, res, next) => {
       password: passwordHash,
     });
     const savedUser = await newUser.save();
+    // const savedUser = await User.create(req.body)
+    // console.log(savedUser)
     res.status(201).json(savedUser);
   } catch (err) {
     return next({
@@ -31,6 +32,7 @@ userController.register = async (req, res, next) => {
 // LOGGING IN
 userController.login = async (req, res, next) => {
   try {
+    console.log('HERE: ',req.body)
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) return res.status(400).json({ msg: 'User does not exist' });
