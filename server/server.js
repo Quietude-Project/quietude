@@ -1,57 +1,42 @@
-const path = require('path');
 const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
-
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
-
+const dotenv = require('dotenv');
+const path = require('path');
 const PORT = 3000;
+const userRouter = require('./routes/userRouter');
+const taskRouter = require('./routes/taskRouter');
+const commentRouter = require('./routes/commentRouter');
+// const verifyRouter = require('./routes/verifyRouter');
+const cookieParser = require('cookie-parser');
 
-const MONGO_URI = 'mongodb+srv://studyspot:studiousmoles@cluster0.6h0gbc8.mongodb.net/?retryWrites=true&w=majority';
+dotenv.config();
 
-mongoose 
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: 'coffeeShopReviews'
-  })
-  .then(() => console.log('Connected to MongoDB.'))
-  .catch(err => console.log(err));
+const app = express();
 
-// statically serve static files and serve root directory index.html only in production mode
-if (process.env.NODE_ENV === 'production') {
-    app.use('/build', express.static(path.join(__dirname, '../dist')));
-    app.get('/', (req, res) => {
-      return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
-    });
-}
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
-// require routers
-const routerUser = require('./routes/users');
-const routerCoffee = require('./routes/coffee');
+// ROUTE HANDLER
+// Verify user does not work 
+// app.use('/dashboard', verifyRouter);
+app.use('/users', userRouter);
+app.use('/tasks', taskRouter);
+app.use('/comments', commentRouter);
 
-// define route handlers
-app.use('/public', express.static(path.join(__dirname, '../client/public')));
-app.use('/api/user', routerUser);
-app.use('/api/coffee', routerCoffee);
-
-
-// catch-all error handler
-app.use((req, res) => res.status(404).send('Page not found'));
-
-// global error handler
+// GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
-    const defaultErr = {
-      log: 'Global error handler caught unknown middleware error',
-      status: 400,
-      message: { err: 'An error occurred caught in global error handler' }
-    };
-    const errObj = Object.assign({}, defaultErr, err);
-    console.log(errObj.log);
-    return res.status(errObj.status).json(errObj.message);
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => { console.log(`Server listening on PORT: ${PORT}...`)});
+
+app.listen(PORT , () => { console.log(`Listening on port ${PORT}...`); }); //log conected to port
+
 module.exports = app;
