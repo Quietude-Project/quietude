@@ -18,8 +18,6 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 // ROUTE HANDLERS
 app.use('/users', userRouter);
 
-app.get('/dashboard')
-
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   const defaultErr = {

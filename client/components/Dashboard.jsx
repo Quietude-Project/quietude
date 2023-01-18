@@ -8,7 +8,7 @@ const Dashboard = () => {
   const searchCoffeeShops = async (location) => {
     try {
       console.log(location)
-      const response = await axios.get(`http://localhost:3001/search?location=${location}&categories=coffee`,
+      const response = await axios.get(`/api/search?location=${location}&categories=coffee`,
         {
           headers: {
             Authorization: `Bearer KqmdPNyHvBAM9NyYYvYAqnnw0N367FN1UJ2vzgeDwVIKWVlFVr6XKDCmE-_xCP7UUkJzqehTpWjI5hm4NT3DwJ9kEDi7WDxeqU_Fc9Dlv0sTRGhBx3Q2kEcHUDHHY3Yx`,
