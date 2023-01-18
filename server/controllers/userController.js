@@ -21,6 +21,7 @@ userController.register = async (req, res, next) => {
     // console.log(savedUser)
     res.status(201).json(savedUser);
   } catch (err) {
+    console.log(err)
     return next({
       status: 400,
       log: 'Error in userController.register',
