@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const PORT = process.env.PORT || 3001;
-const userRouter = require('./routes/userRouter');
+const PORT = process.env.PORT || 3001
+const userRouter = require('./routes/userRouter')
+const locationRouter = require('./routes/locationRouter')
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
 // ROUTE HANDLERS
 app.use('/users', userRouter);
+app.use('/locations', locationRouter);
 
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
