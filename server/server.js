@@ -1,6 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose')
-const cors = require('cors')
+const mongoose = require('mongoose');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 const PORT = process.env.PORT || 3001
@@ -20,6 +20,8 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use('/users', userRouter);
 app.use('/locations', locationRouter);
 
+app.get('/dashboard')
+
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   const defaultErr = {
@@ -33,7 +35,10 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
   })
