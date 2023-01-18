@@ -1,55 +1,61 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: '/client/index.js', //react landing page
   output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
     publicPath: '/',
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js'
-  }, 
-  plugins: [new HtmlWebpackPlugin({template: './client/index.html'}), new MiniCssExtractPlugin()],
+  },
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+        },
+      },
+      {
+        test: /.(css|scss)$/,
+        include: path.resolve(__dirname, 'client'),
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i, //image loader for logo
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+    ],
+  },
+  plugins: [
+    new HTMLWebpackPlugin({
+      template: './index.html', //template that webpack builds base html off
+    }),
+  ],
   devServer: {
     static: {
-        // publicPath: '/dist',
-        // directory: path.resolve(__dirname, 'dist')
-        directory: path.join(__dirname, './client/index.html')
+      directory: path.join(__dirname, 'dist'),
     },
-    host: 'localhost',
+    compress: true,
     port: 8080,
-    headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
-        '/': 'http://localhost:3000'
+      '/api': {
+        target: 'http://localhost:3000', //redirects requests to 3000 from 8080 if in dev
+        pathRewrite: { '^/api': '' }, //do not call localhost:3000 directly, so make all fetch reqs to /api first
+        changeOrigin: true,
+      },
     },
-},
-    
-mode: process.env.NODE_ENV,
-
-module: {
-    rules: [
-        {
-            test: /\.(jsx|js)$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    // presets: ['@babel/preset-env', '@babel/preset-react']
-                    presets: ['@babel/env', '@babel/react']
-                }
-            }
-        },
-        {
-            test: /\.s[ac]ss$/i,
-            use: ["style-loader", "css-loader", "sass-loader"],
-        },
-        {
-            test: /\.css$/i,
-            use: [MiniCssExtractPlugin.loader, "css-loader"],
-        },
-  ]
-},
-  resolve: {
-    extensions: ['.js', '.jsx']
-  }
-}
+    hot: true,
+    open: true,
+    historyApiFallback: true,
+    // devtool: 'eval-source-map'
+  },
+};
