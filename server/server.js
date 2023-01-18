@@ -1,10 +1,10 @@
 const express = require('express');
-const mongoose = require('mongoose')
-const cors = require('cors')
+const mongoose = require('mongoose');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const PORT = process.env.PORT || 3001
-const userRouter = require('./routes/userRouter')
+const PORT = process.env.PORT || 3001;
+const userRouter = require('./routes/userRouter');
 
 dotenv.config();
 
@@ -17,6 +17,8 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
 // ROUTE HANDLERS
 app.use('/users', userRouter);
+
+app.get('/dashboard')
 
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
@@ -31,7 +33,10 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
   })

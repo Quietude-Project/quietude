@@ -20,6 +20,7 @@ userController.register = async (req, res, next) => {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
+    console.log(err)
     return next({
       status: 400,
       log: 'Error in userController.register',
