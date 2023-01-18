@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 import LocationSearch from "./LocationSearch.jsx";
 
-const Pin = ({ src }) => <img id='map-pin' src={src}></img>;
+const Pin = ({ src }) => <img className='h-7 w-7' src={src}></img>;
 
 const MapContainer = props => {
   const defaultProps = {
@@ -24,8 +24,7 @@ const MapContainer = props => {
 
   return (
     // Important! Always set the container height explicitly
-    <div style={{ height: '100vh', width: '100%' }}>
-      <LocationSearch />
+    <div style={{ height: '80vh', width: '100%' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ 
           key: "AIzaSyAgHtlMKlZWcQfI9wlF4KfD7FZPI-4tINk",
@@ -35,8 +34,8 @@ const MapContainer = props => {
         defaultZoom={defaultProps.zoom}
         >
         <Pin
-          lat={33.955413}
-          lng={-117.337844}
+          lat={defaultProps.center.lat}
+          lng={defaultProps.center.lng}
           src={pin}
           />
       </GoogleMapReact>
