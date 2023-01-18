@@ -5,6 +5,7 @@ import SignUp from './SignUp.jsx';
 import Dashboard from './Dashboard.jsx';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Logo from '../Images/Logo.png';
+import MapContainer from './MapContainer.jsx';
 
 const Navbar = () => {
   const [selectedPage, setSelectedPage] = useState('');
@@ -61,6 +62,7 @@ const Navbar = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path='/map' element={<MapContainer />} />
       </Routes>
     </>
   );
