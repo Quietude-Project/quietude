@@ -19,7 +19,7 @@ const Login = props => {
             };
 
             //Login endpoints pending
-        fetch('http://localhost:3000', requestOptions)
+        fetch('/api/user/login', requestOptions)
           .then(data => {
             if (!data.ok) {
                 alert('Your username or password is incorrect');
