@@ -3,6 +3,9 @@ const axios = require('axios');
 const locationController = {};
 
 locationController.getLocations = (req, res, next) => {
+  const { location } = req.query;
+  // console.log('HERE', req.query)
+  
   const config = {
     headers: {
       Authorization:
@@ -10,14 +13,13 @@ locationController.getLocations = (req, res, next) => {
     },
     params: {
       term: "coffee",
-      latitude: 33.900059,
-      longitude: -117.914384,
+      location: location
     },
   };
 
   axios.get('https://api.yelp.com/v3/businesses/search', config)
     .then(response => {
-      console.log('list of businesses is: ', response.data.businesses)
+      // console.log('list of businesses is: ', response.data.businesses)
       res.locals.locations = response.data.businesses;
       return next();
     })
