@@ -9,7 +9,7 @@ const MapContainer = (props) => {
         width: "800px"
       }}
       zoom={11}
-      center={{ lat: 34.0522, lng: -118.2437 }}
+      center={{ lat: props.geocode.lat, lng: props.geocode.lng }}
     >
       {props.stores.map(store => (
         <Marker

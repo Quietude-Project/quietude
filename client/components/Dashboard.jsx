@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [location, setLocation] = useState('');
   const [stores, setStores] = useState([]);
   const [showMap, setShowMap] = useState(false);
+  const [geocode, setGeocode] = useState({ lat: 34.0522, lng: -118.2437 })
 
   const searchCoffeeShops = async (location) => {
     try {
@@ -26,7 +27,7 @@ const Dashboard = () => {
 
   return (
     <div className=" flex h-screen w-screen flex-col items-center justify-center">
-      <form
+      {/* <form
         onSubmit={(e) => {
           e.preventDefault();
           searchCoffeeShops(location);
@@ -40,7 +41,8 @@ const Dashboard = () => {
           className="bg-secondary-500 rounded-lg py-1 px-4"
         />
         <button>Search</button>
-      </form>
+      </form> */}
+      <LocationSearch searchCoffeeShops={searchCoffeeShops} setShowMap={setShowMap} setLocation={setLocation} setGeocode={setGeocode}/>
       {/* <Container stores={stores}/> */}
       {/* <MapContainer stores={stores}/> */}
       {stores && (
@@ -61,7 +63,7 @@ const Dashboard = () => {
           </div>
           {showMap && (
             <div className='mt-4'>
-              <Container stores={stores} />
+              <Container stores={stores} geocode={geocode}/>
             </div>
           )}
         </div>
