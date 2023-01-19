@@ -6,6 +6,7 @@ const path = require('path');
 const PORT = process.env.PORT || 3001
 const userRouter = require('./routes/userRouter')
 const locationRouter = require('./routes/locationRouter')
+const commentRouter = require('./routes/commentRouter')
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 // ROUTE HANDLERS
 app.use('/users', userRouter);
 app.use('/locations', locationRouter);
+app.use('/comments', commentRouter);
 
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
