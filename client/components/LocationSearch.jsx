@@ -61,7 +61,6 @@ class LocationSearch extends React.Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <MapContainer />
       </div>
     );
   }
