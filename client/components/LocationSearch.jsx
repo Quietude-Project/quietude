@@ -39,21 +39,20 @@ class LocationSearch extends React.Component {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  this.props.searchCoffeeShops(this.state.address);
-                  this.props.setShowMap(true);
+                  this.handleSelect(this.state.address)
                 }}
                 className="mt-20"
               >
                 <input
                   {...getInputProps({
                     placeholder: 'Search Places ...',
-                    className: '"bg-secondary-500 rounded-lg py-1 px-4"',
+                    className: '"bg-secondary-500 rounded-lg py-1 px-4 z-auto"',
                   })}
                 />
                 <button>Submit</button>
               </form>
 
-              <div className="autocomplete-dropdown-container">
+              <div className="fixed z-50">
                 {loading && <div>Loading...</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
