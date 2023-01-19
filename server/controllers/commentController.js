@@ -6,7 +6,6 @@ const commentController = {};
 commentController.getComment = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(req.body)
 
     const comment = await Comment.find({ store_id: id })
     // console.log(savedUser)

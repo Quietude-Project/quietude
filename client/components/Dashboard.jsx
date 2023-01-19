@@ -3,6 +3,7 @@ import axios from 'axios';
 import Store from './Store.jsx';
 import LocationSearch from './LocationSearch.jsx';
 import Container from './Container.jsx';
+import Geocoder from 'react-geocode';
 
 const Dashboard = () => {
   // /api/locations/search?location=${location}&categories=coffee
@@ -38,6 +39,7 @@ const Dashboard = () => {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           className="bg-secondary-500 rounded-lg py-1 px-4"
+          placeholder="Search for a location"
         />
         <button>Search</button>
       </form>
@@ -60,7 +62,7 @@ const Dashboard = () => {
             ))}
           </div>
           {showMap && (
-            <div className='mt-4'>
+            <div className="mt-4">
               <Container stores={stores} />
             </div>
           )}

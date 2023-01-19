@@ -13,19 +13,18 @@ const Store = ({ id, name, address, price, rating, imgURL, setShowMap }) => {
 
   const handleOpenModal = async () => {
     setModalActive(true);
-    setShowMap(false);
+    // setShowMap(false);
     const response = await axios.get(`/api/comments/${id}`)
-    console.log(response.data)
     setReviews(response.data)
   };
 
   const handleCloseModal = () => {
     setModalActive(false);
-    setShowMap(true)
+    // setShowMap(true)
   };
 
   return (
-    <div className="bg-secondary-500 rounded-xl p-3 h-80 w-64">
+    <div className="bg-secondary-500 rounded-xl p-3 h-80 w-64 hover:bg-opacity-50">
       {/* <button
         onClick={(e) => {
           e.preventDefault();
@@ -57,7 +56,7 @@ const Store = ({ id, name, address, price, rating, imgURL, setShowMap }) => {
         <span className="underline font-bold mr-2">Location:</span>
         {address}
       </p>
-      <img src={imgURL} className=" h-5/6 w-5/6" />
+      <img src={imgURL} className="max-h-[180px] w-full rounded-xl mt-2" />
     </div>
   );
 };
