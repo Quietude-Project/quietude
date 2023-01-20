@@ -1,10 +1,22 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import Modal from './Modal.jsx';
+import { StarIcon } from '@heroicons/react/24/outline';
+// import { StarIcon } from '@heroicons/react/24/solid';
 
-const Store = ({ id, name, address, price, rating, imgURL, setShowMap }) => {
+const Store = ({
+  currentUser,
+  id,
+  name,
+  address,
+  price,
+  rating,
+  imgURL,
+  setShowMap,
+}) => {
   const [modalActive, setModalActive] = useState(false);
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState([]);
+  const [isFav, setFav] = useState(false);
 
   // const handleFavorite = async (id) => {
   //   const response = await axios.post('/api/comments/create', { text: comment, store_id: id });
@@ -14,13 +26,43 @@ const Store = ({ id, name, address, price, rating, imgURL, setShowMap }) => {
   const handleOpenModal = async () => {
     setModalActive(true);
     // setShowMap(false);
-    const response = await axios.get(`/api/comments/${id}`)
-    setReviews(response.data)
+    getReviews();
   };
 
   const handleCloseModal = () => {
     setModalActive(false);
     // setShowMap(true)
+  };
+
+  const getReviews = async () => {
+    const response = await axios.get(`/api/comments/${id}`);
+    setReviews(response.data);
+  };
+
+  const handleClickFavorite = async () => {
+    const user_id = localStorage.getItem('user_id');
+
+    if (!isFav) {
+      const response = await axios.patch('/api/users/favorites', {
+        user_id,
+        store_id: id,
+        name,
+        address,
+        price,
+        rating,
+        imgURL,
+      });
+      console.log(response.data);
+      setFav(true);
+    } else {
+      const delResponse = await axios.patch('/api/users/delete', {
+        user_id,
+        name,
+      });
+
+      console.log(delResponse.data);
+      return setFav(false);
+    }
   };
 
   return (
@@ -33,12 +75,24 @@ const Store = ({ id, name, address, price, rating, imgURL, setShowMap }) => {
       >
         STAR
       </button> */}
-      <div onClick={handleOpenModal}>?</div>
+      <div className="flex justify-between mb-2">
+        <div onClick={handleOpenModal} className="bg-primary-500 px-2 rounded-full text-secondary-500">?</div>
+        {isFav ? (
+          <StarIcon
+            onClick={handleClickFavorite}
+            className="h-6 w-6"
+            fill="gold"
+          />
+        ) : (
+          <StarIcon onClick={handleClickFavorite} className="h-6 w-6" />
+        )}
+      </div>
       {modalActive && (
         <Modal
           id={id}
           handleCloseModal={handleCloseModal}
           reviews={reviews}
+          getReviews={getReviews}
         />
       )}
       <p className="text-xl -mt-2">{name}</p>

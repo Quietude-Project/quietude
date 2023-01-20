@@ -22,10 +22,10 @@ commentController.getComment = async (req, res, next) => {
 
 commentController.createComment = async (req, res, next) => {
   try {
-    const { text, store_id } = req.body;
+    const { user, text, store_id } = req.body;
     console.log('HERE', req.body)
 
-    const newComment = await Comment.create({ text, store_id })
+    const newComment = await Comment.create({ user, text, store_id })
     // console.log(savedUser)
     res.status(200).json(newComment);
   } catch (err) {

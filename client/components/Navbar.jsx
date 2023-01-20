@@ -40,6 +40,17 @@ const Navbar = () => {
             >
               Dashboard
             </Link>
+            <Link
+              to="/favorites"
+              onClick={() => setSelectedPage('favorites')}
+              className={`${
+                selectedPage === 'favorites'
+                  ? 'text-tertiary-500'
+                  : 'text-primary-500'
+              } hover:text-opacity-75`}
+            >
+              Favorites
+            </Link>
           </div>
           <div className="flex items-center gap-10">
             <Link to="/login">

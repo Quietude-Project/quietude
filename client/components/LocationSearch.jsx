@@ -14,9 +14,15 @@ class LocationSearch extends React.Component {
   };
  
   handleSelect = address => {
+    this.props.searchCoffeeShops(address);
+    this.props.setShowMap(true);
+
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(latLng => {
+        console.log('Success', latLng);
+        this.props.setGeocode(latLng);
+      })
       .catch(error => console.error('Error', error));
   };
 
@@ -30,13 +36,23 @@ class LocationSearch extends React.Component {
         >
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div>
-              <input
-                {...getInputProps({
-                  placeholder: 'Search Places ...',
-                  className: 'location-search-input',
-                })}
-              />
-              <div className="autocomplete-dropdown-container">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  this.handleSelect(this.state.address)
+                }}
+                className="mt-20"
+              >
+                <input
+                  {...getInputProps({
+                    placeholder: 'Search Places ...',
+                    className: '"bg-secondary-500 rounded-lg py-1 px-4 z-auto"',
+                  })}
+                />
+                <button>Submit</button>
+              </form>
+
+              <div className="fixed z-50">
                 {loading && <div>Loading...</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
