@@ -9,7 +9,7 @@ locationController.getLocations = (req, res, next) => {
   const config = {
     headers: {
       Authorization:
-        "Bearer 8fwPfH2T5X5aGSbIvH6X5dYXoap_eXBUPLUwz1VU9noHbGOIvFaOZo3Wur5Molt6Go5E4x1lResOtPVc0Eeb9Uu-QtCFoSHksDmUH7Z4zgshSC3fbeSEBm_zzSHHY3Yx",
+        "Bearer /* Yelp API Key */",
     },
     params: {
       term: "coffee",
