@@ -6,7 +6,7 @@ import Container from './Container.jsx';
 
 const Dashboard = () => {
   // /api/locations/search?location=${location}&categories=coffee
-  const GOOGLE_API_KEY = 'AIzaSyAgHtlMKlZWcQfI9wlF4KfD7FZPI-4tINk';
+  const GOOGLE_API_KEY = /* Google API Key */;
 
   const [location, setLocation] = useState('');
   const [stores, setStores] = useState([]);
