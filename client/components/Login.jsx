@@ -1,16 +1,16 @@
 
 import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-import '../stylesheets/signin.css'
+import '../style.css'
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 const Login = props => {
+    const navigate = useNavigate()
     const [ username , setUsername ] = useState('');
     const [ password , setPassword ] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { username, password } = props;
 
         const requestOptions = {
             method: 'POST',
@@ -19,14 +19,15 @@ const Login = props => {
             };
 
             //Login endpoints pending
-        fetch('http://localhost:3000', requestOptions)
+        fetch('/api/users/login', requestOptions)
           .then(data => {
             if (!data.ok) {
+                console.log(username, password)
                 alert('Your username or password is incorrect');
                 //throw Error('Your username or password is incorrect')
-                navigate('/signin')
+                navigate('/login')
             } else {
-               navigate('/home', {state:{username: username}});
+               navigate('/', {state:{username: username}});
             }
         })
         .catch(err => console.log(err));
@@ -34,7 +35,7 @@ const Login = props => {
     }
 
         return (
-            <form className='login' onSubmit={handleSubmit}>
+            <form className="h-screen w-screen flex flex-col items-center justify-center" onSubmit={handleSubmit}>
                 <h3>Sign Up</h3>
 
                 <label>Username:</label>
@@ -47,7 +48,7 @@ const Login = props => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}/>
 
-                <button>Log In</button>
+                <button className='mt-5'>Log In</button>
             </form>
         )
 }
