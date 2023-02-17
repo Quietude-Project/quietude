@@ -29,7 +29,7 @@ const MapContainer = ({ stores }) => {
     <div style={{ height: '80vh', width: '100%' }}>
       <GoogleMapReact
         bootstrapURLKeys={{
-          key: 'AIzaSyAgHtlMKlZWcQfI9wlF4KfD7FZPI-4tINk',
+          key: /* Google API Key */,
           libraries: 'places',
         }}
         defaultCenter={defaultProps.center}
